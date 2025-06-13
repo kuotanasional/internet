@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Inject Paket Internet Unlimited Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --bg-dark: #081024;
+            --bg-card: #111827;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+            --accent: #2dd4bf; /* Teal-400 */
+            --accent-dark: #14b8a6; /* Teal-500 */
+            --success: #10B981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            min-height: 80vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        /* Memberikan tinggi 100vh untuk desktop */
+        @media (min-width: 768px) {
+            .hero-bg {
+                min-height: 100vh;
+            }
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glowing-text {
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent), 0 0 20px var(--accent-dark), 0 0 25px var(--accent-dark);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--accent), 0 0 20px var(--accent), 0 0 25px var(--accent), 0 0 30px var(--accent), 0 0 35px var(--accent);
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-dark), 0 0 30px var(--accent-dark), 0 0 40px var(--accent-dark), 0 0 50px var(--accent-dark), 0 0 60px var(--accent-dark), 0 0 70px var(--accent-dark);
+            }
+        }
+       
+        .glowing-button {
+             box-shadow: 0 0 5px var(--accent), 0 0 15px var(--accent), 0 0 25px var(--accent-dark);
+             animation: button-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes button-glow {
+            from {
+                box-shadow: 0 0 5px var(--accent), 0 0 15px var(--accent-dark), 0 0 25px var(--accent-dark);
+            }
+            to {
+                 box-shadow: 0 0 10px var(--accent), 0 0 25px var(--accent), 0 0 40px var(--accent-dark);
+            }
+        }
+
+
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+        }
+
+        .section-title-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            position: relative;
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0px 40px rgba(45, 212, 191, 0.15);
+            border-color: rgba(45, 212, 191, 0.5) !important;
+        }
+
+        .feature-icon {
+            background-color: rgba(45, 212, 191, 0.1);
+            color: var(--accent);
+            padding: 0.75rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 0 15px rgba(45, 212, 191, 0.2);
+        }
+
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+       
+        .operator-text-box {
+            padding: 0.75rem 1.25rem;
+            background-color: var(--bg-card);
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .operator-text-box:hover {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            border-color: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(45, 212, 191, 0.2);
+        }
+
+        .active-customers-section {
+            background-color: var(--bg-card);
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .customer-count-card {
+            background: var(--bg-dark);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            border: 1px solid #374151;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .customer-count-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-count-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .customer-count-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .notif-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1F2937;
+            color: var(--text-primary);
+            border-radius: 9999px;
+            box-shadow: 0 8px 24px rgba(45, 212, 191, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.6rem 1rem;
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            width: auto;
+            min-width: 300px;
+            max-width: 350px;
+            z-index: 2000;
+            opacity: 0;
+            animation-name: fadeInOutSlideSmoothV2;
+            animation-duration: 6.5s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.3, 0.7, 0.4, 1);
+            font-family: 'Inter', sans-serif;
+            border: 1px solid #4B5563;
+        }
+
+        .notif-icon-wrapper {
+            background: linear-gradient(145deg, var(--accent) 0%, var(--accent-dark) 100%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(45, 212, 191, 0.3);
+        }
+
+        .notif-icon-wrapper i {
+            color: var(--bg-dark);
+            font-size: 1rem;
+        }
+
+        .notif-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.05rem;
+            overflow: hidden;
+        }
+
+        .notif-title {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .notif-message {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .notif-message strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .notif-time {
+            font-size: 0.625rem;
+            color: #6B7280;
+            margin-top: 0.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        .notif-time i {
+            font-size: 0.6rem;
+        }
+
+        @keyframes fadeInOutSlideSmoothV2 {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-40px) scale(0.95); }
+            12% { opacity: 1; transform: translateX(-50%) translateY(0px) scale(1); }
+            88% { opacity: 1; transform: translateX(-50%) translateY(0px) scale(1); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-25px) scale(0.95); }
+        }
+
+        @media (max-width: 420px) {
+            .notif-box {
+                padding: 0.5rem 0.8rem; gap: 0.5rem; width: calc(100% - 20px); top: 10px; min-width: 280px;
+            }
+            .notif-icon-wrapper { width: 32px; height: 32px; }
+            .notif-icon-wrapper i { font-size: 0.9rem; }
+            .notif-title { font-size: 0.75rem; }
+            .notif-message { font-size: 0.6875rem; }
+        }
+       
+        .faq-section {
+            padding-top: 4rem; padding-bottom: 4rem; background-color: var(--bg-card);
+        }
+
+        .faq-item details {
+            background-color: var(--bg-dark);
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .faq-item details:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item summary {
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        .faq-item summary:hover { background-color: #1F2937; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+        .faq-item details[open] summary::after { transform: rotate(180deg); }
+       
+        .faq-answer {
+            padding: 0 1.5rem 1.25rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            border-top: 1px solid #374151;
+            margin-top: 0.75rem;
+            padding-top: 1.25rem;
+        }
+        .faq-answer p {
+            margin-bottom: 0.75rem;
+        }
+         .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+        .faq-answer ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .faq-answer ul li {
+            margin-bottom: 0.5rem;
+        }
+       
+        .payment-instruction-section {
+            background-color: var(--bg-dark);
+            padding: 2rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.15);
+            margin-top: 2.5rem;
+            border: 1px solid #374151;
+        }
+        @media (min-width: 640px) { .payment-instruction-section { padding: 2.5rem; } }
+       
+        .payment-header h2 { color: #FFFFFF; }
+        .payment-header p { color: var(--text-secondary); }
+       
+        .payment-amount-box {
+            background-color: rgba(45, 212, 191, 0.05);
+            border: 2px dashed var(--accent-dark);
+            padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 2rem;
+            display: inline-flex; flex-direction: column; align-items: center;
+        }
+        .payment-amount-box #paymentAmountToTransfer {
+            font-size: 2.5rem; font-weight: 800; color: var(--accent);
+            margin-bottom: 0.75rem; line-height: 1;
+        }
+        @media (min-width: 640px) { .payment-amount-box #paymentAmountToTransfer { font-size: 3rem; } }
+
+        .app-card {
+            background-color: var(--bg-card); border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border: 1px solid #374151;
+        }
+        .app-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(45, 212, 191, 0.1); }
+       
+        .bank-card { 
+            padding: 1.25rem; 
+            margin-bottom: 1.25rem; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+        }
+        .bank-logo-container {
+            width: 100%;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+        }
+        .bank-card .bank-logo {
+            height: 2.25rem;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .bank-card .bank-name { color: var(--text-primary); }
+        .bank-card .bank-type { color: var(--text-secondary); }
+        .bank-card .account-number { color: #FFFFFF; }
+        .bank-card .account-name-owner { color: var(--text-secondary); }
+
+        .btn-primary { background-color: var(--accent); color: var(--bg-dark); }
+        .btn-primary:hover { background-color: var(--accent-dark); }
+        .btn-success { background-color: var(--success); color: white; }
+        .btn-success:hover { background-color: #059669; }
+        #confirmationButton:disabled {
+            background-color: #374151; /* gray-700 */
+            color: #9CA3AF; /* gray-400 */
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+
+        .payment-note {
+            margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem;
+            background-color: rgba(45, 212, 191, 0.1);
+            border-left-width: 4px; border-color: var(--accent);
+            border-radius: 0.375rem; text-align: left;
+        }
+        .payment-note p { color: var(--text-primary); }
+        .payment-note strong { font-weight: 600; color: var(--accent); }
+        .payment-note i { margin-right: 0.5rem; color: var(--accent); }
+
+        /* Modal / Message Box Styling */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--bg-card); margin: auto; padding: 25px;
+            width: 90%; max-width: 450px; border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.4); text-align: center;
+            position: relative; border: 1px solid #4B5563;
+        }
+        .close-button {
+            color: var(--text-secondary); position: absolute; top: 10px; right: 15px;
+            font-size: 28px; font-weight: bold; cursor: pointer;
+        }
+        .close-button:hover, .close-button:focus { color: var(--text-primary); }
+        .modal-content h3 { color: var(--accent); margin-bottom: 15px; }
+        .modal-content p { color: var(--text-primary); margin-bottom: 20px; }
+        .modal-content button {
+            background-color: var(--accent); color: var(--bg-dark);
+            padding: 10px 20px; border: none; border-radius: 8px;
+            cursor: pointer; font-size: 1rem; font-weight: 600;
+        }
+        .modal-content button:hover { background-color: var(--accent-dark); }
+       
+        #successModal .modal-content {
+            animation: success-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes success-glow {
+            from {
+                box-shadow: 0 0 15px rgba(45, 212, 191, 0.2), 0 0 30px rgba(45, 212, 191, 0.1);
+            }
+            to {
+                box-shadow: 0 0 25px rgba(45, 212, 191, 0.4), 0 0 50px rgba(45, 212, 191, 0.2);
+            }
+        }
+       
+        .form-control {
+            background-color: var(--bg-dark) !important;
+            border: 1px solid #374151 !important;
+            color: var(--text-primary) !important;
+        }
+        .form-control:focus {
+             --tw-ring-color: var(--accent) !important;
+            border-color: var(--accent) !important;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary) !important;
+        }
+       
+        /* Override browser autofill styles */
+        .form-control:-webkit-autofill,
+        .form-control:-webkit-autofill:hover, 
+        .form-control:-webkit-autofill:focus, 
+        .form-control:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px var(--bg-dark) inset !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+
+        select.form-control {
+            color: var(--text-secondary); /* Placeholder color */
+        }
+        select.form-control.filled, select.form-control:valid {
+             color: var(--text-primary);
+        }
+        select.form-control option {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+        }
+        select.form-control option[value=""][disabled] {
+            display: none;
+        }
+
+        /* UPDATED Comparison Table Styles */
+        .comparison-container {
+           background-color: var(--bg-dark);
+           border: 1px solid #374151;
+           border-radius: 0.75rem;
+           box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+           overflow: hidden;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        .comparison-table .feature-col {
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .comparison-table .our-service-col {
+            background-color: rgba(45, 212, 191, 0.05);
+        }
+        .comparison-table .our-service-col strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .comparison-table .fa-check-circle { color: var(--success); margin-right: 0.5rem; }
+        .comparison-table .fa-times-circle { color: #EF4444; margin-right: 0.5rem; }
+        .comparison-table .our-service-col { color: var(--text-primary); }
+        .comparison-table thead th:not(:first-child) { text-align: center; }
+        .comparison-table thead th:nth-child(2) { color: var(--accent); }
+        .comparison-table tbody td:not(:first-child) { text-align: center; }
+
+        @media (max-width: 768px) {
+            .comparison-container {
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+                overflow: visible;
+            }
+            .comparison-table, .comparison-table tbody, .comparison-table tr, .comparison-table td {
+                display: block;
+                width: 100%;
+            }
+            .comparison-table thead { display: none; }
+            .comparison-table tr {
+                margin-bottom: 1.5rem;
+                background-color: var(--bg-card);
+                border: 1px solid #374151;
+                border-radius: 0.75rem;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                overflow: hidden;
+            }
+            .comparison-table td {
+                padding: 1rem;
+                border-bottom: 1px solid #374151;
+                text-align: left;
+            }
+            .comparison-table tr td:last-child { border-bottom: none; }
+            .comparison-table td.feature-col {
+                background-color: var(--bg-dark);
+                font-weight: 700;
+                color: var(--text-primary);
+                text-align: center;
+                border-bottom: 1px solid #374151;
+            }
+            .comparison-table td:not(.feature-col)::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: 600;
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+            }
+            .comparison-table td.our-service-col { border-bottom: 1px solid #374151; }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Header -->
+    <header class="hero-bg text-white">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content container mx-auto px-6 text-center py-20">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white">
+                Internet <span class="glowing-text">UNLIMITED</span>, Kebebasan Tanpa Batas!
+            </h1>
+            <p class="text-lg sm:text-xl mb-10 max-w-3xl mx-auto text-gray-300">
+                Rasakan pengalaman internet super cepat, stabil tanpa FUP, dan harga terjangkau. Aktivasi instan, resmi, dan terpercaya untuk semua kebutuhan digital Anda!
+            </p>
+            <a href="#pricing" class="cta-button glowing-button bg-teal-400 text-gray-900 font-bold py-4 px-10 rounded-lg text-lg hover:bg-teal-300">
+                Lihat Pilihan Paket <i class="fas fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Active Customers -->
+    <section id="active-customers" class="active-customers-section">
+        <div class="container mx-auto px-6">
+            <div class="customer-count-card">
+                <div class="customer-count-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div id="customerCounter" class="customer-count-number">0</div>
+                <p class="customer-count-text">Pelanggan Aktif Percaya Pada Kami</p>
+                <p class="text-sm text-gray-400">Bergabunglah dengan ribuan lainnya yang menikmati internet tanpa batas!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operators -->
+    <section id="operators" class="py-16 sm:py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Operator yang Tersedia</h2>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div class="operator-text-box">Telkomsel</div>
+                <div class="operator-text-box">Indosat Ooredoo</div>
+                <div class="operator-text-box">XL Axiata</div>
+                <div class="operator-text-box">Axis</div>
+                <div class="operator-text-box">Tri (3)</div>
+                <div class="operator-text-box">Smartfren</div>
+                <div class="operator-text-box">by.U</div>
+                <div class="operator-text-box">Live.On</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages -->
+    <section id="advantages" class="py-16 sm:py-20 bg-card">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Mengapa Memilih Layanan Kami?</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-infinity fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Internet Unlimited Sejati</h3>
+                    <p class="text-gray-400">Akses tanpa batas kuota, streaming, download, dan gaming sepuasnya selama paket aktif.</p>
+                </div>
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-tachometer-alt fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Kecepatan Super Stabil</h3>
+                    <p class="text-gray-400">Nikmati kecepatan optimal hingga 80-120 Mbps, tergantung operator dan kondisi jaringan di lokasi Anda.</p>
+                </div>
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-shield-alt fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Tanpa FUP (Anti Lemot)</h3>
+                    <p class="text-gray-400">Tidak ada kebijakan Fair Usage Policy. Kecepatan internet Anda tidak akan turun.</p>
+                </div>
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Support Semua Perangkat</h3>
+                    <p class="text-gray-400">Gunakan di HP, Modem/Mifi, Router, PC/Laptop, Smart TV, hingga CCTV Online.</p>
+                </div>
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-wifi fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Bebas Hotspot & Tethering</h3>
+                    <p class="text-gray-400">Bagikan koneksi internet Anda ke perangkat lain tanpa batasan.</p>
+                </div>
+                <div class="bg-dark p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon"><i class="fas fa-cogs fa-lg"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Aktivasi Otomatis & Resmi</h3>
+                    <p class="text-gray-400">Proses pendaftaran mudah, pembayaran aman, dan paket langsung aktif secara otomatis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="py-16 sm:py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Perbandingan Layanan Kami</h2>
+            </div>
+            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">Lihat bagaimana layanan kami unggul dibandingkan penyedia internet kabel konvensional. Kami memberikan solusi yang lebih fleksibel, cepat, dan terjangkau untuk semua kebutuhan digital Anda.</p>
+            <div class="max-w-6xl mx-auto">
+                 <div class="comparison-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="w-1/4">Fitur</th>
+                                <th class="w-3/8">Layanan Kami (Berbasis Seluler)</th>
+                                <th class="w-3/8">Layanan Lain (IndiH**e, Bizn*t, dll)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-col">Harga</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><strong>Sangat Terjangkau</strong><br><span class="text-sm text-gray-400">Mulai dari Rp 66rb/bulan</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col">Relatif Mahal<br><span class="text-sm text-gray-400">Mulai dari Rp 200rb-300rb/bulan</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Fleksibilitas & Mobilitas</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Sangat Fleksibel</strong><br><span class="text-sm text-gray-400">Bisa dibawa dan dipakai di mana saja</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col"><i class="fas fa-times-circle"></i> Terbatas<br><span class="text-sm text-gray-400">Hanya bisa digunakan di satu lokasi (rumah/kantor)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Instalasi & Aktivasi</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Instan & Mudah</strong><br><span class="text-sm text-gray-400">Tanpa teknisi, langsung aktif</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col"><i class="fas fa-times-circle"></i> Rumit<br><span class="text-sm text-gray-400">Butuh penarikan kabel & jadwal teknisi</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Jangkauan</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Sangat Luas</strong><br><span class="text-sm text-gray-400">Seluruh Indonesia (tergantung sinyal operator)</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col"><i class="fas fa-times-circle"></i> Terbatas<br><span class="text-sm text-gray-400">Hanya di area yang ter-cover jaringan fiber optik</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Gangguan</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><strong>Minim Gangguan Fisik</strong><br><span class="text-sm text-gray-400">Tidak terpengaruh oleh kabel putus</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col">Rentan Gangguan Fisik<br><span class="text-sm text-gray-400">Sering terjadi gangguan akibat kabel putus atau tiang tumbang</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Perangkat</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Mendukung Semua Perangkat GSM</strong><br><span class="text-sm text-gray-400">HP, Modem, Router, dll</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col">Perangkat Disediakan<br><span class="text-sm text-gray-400">Biasanya hanya modem/router khusus dari penyedia</span></td>
+                            </tr>
+                             <tr>
+                                <td class="feature-col">FUP (Fair Usage Policy)</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Tanpa FUP</strong><br><span class="text-sm text-gray-400">Kecepatan stabil tanpa batas pemakaian wajar</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col"><i class="fas fa-times-circle"></i> Ada FUP<br><span class="text-sm text-gray-400">Kecepatan menurun setelah melewati batas tertentu</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-col">Biaya Tambahan</td>
+                                <td data-label="Layanan Kami" class="our-service-col"><i class="fas fa-check-circle"></i> <strong>Tidak Ada</strong><br><span class="text-sm text-gray-400">Harga paket sudah final</span></td>
+                                <td data-label="Layanan Lain" class="other-service-col">Seringkali Ada<br><span class="text-sm text-gray-400">Biaya instalasi, sewa perangkat, PPN, dll</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 sm:py-20 bg-card">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Pilihan Paket Terbaik Untuk Anda</h2>
+            </div>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Harga transparan, tanpa biaya tersembunyi. Sudah termasuk aktivasi dan layanan penuh selama periode paket.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Paket 3 Bulan -->
+                <div class="bg-dark border border-gray-700 rounded-xl p-8 text-center shadow-lg card-hover flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2 text-white">Paket 3 Bulan</h3>
+                        <p class="text-4xl font-bold text-teal-400 mb-1">Rp 200.000</p>
+                        <p class="text-sm text-gray-400 mb-4">Hemat & ideal untuk kebutuhan jangka pendek.</p>
+                        <div class="my-4 py-2 bg-green-900/50 text-green-300 rounded-md text-sm font-medium border border-green-500/30">
+                            <span class="status-dot"></span>Status Server: <span class="font-bold">Tersedia</span>
+                        </div>
+                        <ul class="text-left space-y-2 text-gray-400 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Internet Unlimited</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Kecepatan Optimal</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Tanpa FUP</li>
+                            <li class="flex items-center"><i class="fas fa-calendar-plus text-green-400 mr-2"></i> Menambah masa aktif kartu 3 bulan</li>
+                        </ul>
+                    </div>
+                    <a href="#order-form" onclick="selectPackage('3 Bulan - Rp 200.000')" class="cta-button block w-full bg-teal-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-400 mt-auto">Pilih Paket Ini</a>
+                </div>
+                <!-- Paket 6 Bulan (Populer) -->
+                <div class="bg-dark border-2 border-teal-500 rounded-xl p-8 text-center shadow-2xl card-hover relative flex flex-col justify-between ring-4 ring-teal-500 ring-opacity-20">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-500 text-gray-900 font-bold px-4 py-1.5 rounded-full shadow-md">Paling Populer</span>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2 text-white mt-3">Paket 6 Bulan</h3>
+                        <p class="text-4xl font-bold text-teal-400 mb-1">Rp 350.000</p>
+                        <p class="text-sm text-gray-400 mb-4">Pilihan terbaik untuk kestabilan & hemat lebih.</p>
+                        <div class="my-4 py-2 bg-green-900/50 text-green-300 rounded-md text-sm font-medium border border-green-500/30">
+                            <span class="status-dot"></span>Status Server: <span class="font-bold">Tersedia</span>
+                        </div>
+                        <ul class="text-left space-y-2 text-gray-400 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Internet Unlimited</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Kecepatan Optimal</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Tanpa FUP</li>
+                             <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Prioritas Layanan</li>
+                            <li class="flex items-center"><i class="fas fa-calendar-plus text-green-400 mr-2"></i> Menambah masa aktif kartu 6 bulan</li>
+                            <li class="flex items-center"><i class="fas fa-user-plus text-green-400 mr-2"></i> Total 2 nomor (1 utama + 1 tambahan)</li>
+                        </ul>
+                    </div>
+                    <a href="#order-form" onclick="selectPackage('6 Bulan - Rp 350.000')" class="cta-button block w-full bg-teal-400 text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-teal-300 mt-auto">Pilih Paket Ini</a>
+                </div>
+                 <!-- Paket 12 Bulan -->
+                <div class="bg-dark border border-gray-700 rounded-xl p-8 text-center shadow-lg card-hover flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2 text-white">Paket 12 Bulan</h3>
+                        <p class="text-4xl font-bold text-teal-400 mb-1">Rp 500.000</p>
+                        <p class="text-sm text-gray-400 mb-4">Super hemat untuk penggunaan jangka panjang & tanpa khawatir.</p>
+                        <div class="my-4 py-2 bg-green-900/50 text-green-300 rounded-md text-sm font-medium border border-green-500/30">
+                            <span class="status-dot"></span>Status Server: <span class="font-bold">Tersedia</span>
+                        </div>
+                        <ul class="text-left space-y-2 text-gray-400 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Internet Unlimited</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Kecepatan Optimal</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Tanpa FUP</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Dukungan Premium</li>
+                            <li class="flex items-center"><i class="fas fa-calendar-plus text-green-400 mr-2"></i> Menambah masa aktif kartu 12 bulan</li>
+                            <li class="flex items-center"><i class="fas fa-users text-green-400 mr-2"></i> Total 4 nomor (1 utama + 3 tambahan)</li>
+                        </ul>
+                    </div>
+                    <a href="#order-form" onclick="selectPackage('12 Bulan - Rp 500.000')" class="cta-button block w-full bg-teal-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-400 mt-auto">Pilih Paket Ini</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 sm:py-20 bg-card">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Proses Aktivasi Super Mudah</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-dark p-6 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon text-2xl"><i class="fas fa-edit"></i></div>
+                    <h3 class="text-lg font-semibold mb-2 text-white">1. Isi Formulir Pendaftaran</h3>
+                    <p class="text-gray-400 text-sm">Lengkapi data diri dan pilih paket yang Anda inginkan pada formulir di bawah.</p>
+                </div>
+                <div class="bg-dark p-6 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon text-2xl"><i class="fas fa-credit-card"></i></div>
+                    <h3 class="text-lg font-semibold mb-2 text-white">2. Lakukan Pembayaran</h3>
+                    <p class="text-gray-400 text-sm">Selesaikan pembayaran sesuai nominal paket yang dipilih melalui metode yang tersedia.</p>
+                </div>
+                <div class="bg-dark p-6 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="feature-icon text-2xl"><i class="fas fa-rocket"></i></div>
+                    <h3 class="text-lg font-semibold mb-2 text-white">3. Paket Langsung Aktif!</h3>
+                    <p class="text-gray-400 text-sm">Setelah pembayaran terkonfirmasi, paket internet unlimited Anda akan aktif secara otomatis.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <div class="inline-block bg-teal-900/50 border-l-4 border-teal-400 text-teal-200 p-6 rounded-lg max-w-3xl mx-auto">
+                    <p class="font-semibold mb-2"><i class="fas fa-info-circle mr-2"></i>Aktivasi Cepat & Otomatis</p>
+                    <p class="text-sm">Sistem kami dirancang untuk memproses aktivasi secara instan setelah pembayaran berhasil. Tidak perlu menunggu lama!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-16 sm:py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Apa Kata Pelanggan Kami?</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-card p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <img alt="Foto Pelanggan Adi" class="w-14 h-14 rounded-full mr-4 border-2 border-teal-400"
+                            onerror="this.src='https://placehold.co/60x60/111827/2dd4bf?text=AP&font=Inter'"
+                            src="https://placehold.co/60x60/111827/2dd4bf?text=AP&font=Inter">
+                        <div>
+                            <h4 class="font-semibold text-white">Adi Prasetyo</h4>
+                            <p class="text-sm text-teal-400">Pengusaha Online</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">"Luar biasa! Internetnya stabil banget buat jualan online. Upload produk jadi cepet, live streaming juga lancar. Recommended!"</p>
+                </div>
+                <div class="bg-card p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <img alt="Foto Pelanggan Sari" class="w-14 h-14 rounded-full mr-4 border-2 border-teal-400"
+                             onerror="this.src='https://placehold.co/60x60/111827/2dd4bf?text=SR&font=Inter'"
+                             src="https://placehold.co/60x60/111827/2dd4bf?text=SR&font=Inter">
+                        <div>
+                            <h4 class="font-semibold text-white">Sari Rahayu</h4>
+                            <p class="text-sm text-teal-400">Mahasiswi</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">"Buat nugas, streaming film, sampai main game online, semuanya lancar jaya. Harganya juga pas di kantong mahasiswa. Mantap!"</p>
+                </div>
+                <div class="bg-card p-8 rounded-xl shadow-lg card-hover border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <img alt="Foto Pelanggan Budi" class="w-14 h-14 rounded-full mr-4 border-2 border-teal-400"
+                             onerror="this.src='https://placehold.co/60x60/111827/2dd4bf?text=BS&font=Inter'"
+                             src="https://placehold.co/60x60/111827/2dd4bf?text=BS&font=Inter">
+                        <div>
+                            <h4 class="font-semibold text-white">Budi Santoso</h4>
+                            <p class="text-sm text-teal-400">Pekerja Kantoran</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">"Awalnya ragu, tapi setelah coba ternyata beneran unlimited tanpa FUP. Cocok buat kerja dari rumah dan hiburan keluarga."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security -->
+    <section id="security" class="py-16 sm:py-20 bg-card">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Keamanan & Kepercayaan Anda Prioritas Kami</h2>
+            </div>
+            <div class="bg-dark p-8 sm:p-12 rounded-xl shadow-xl max-w-4xl mx-auto border border-gray-700">
+                <div class="text-center mb-8">
+                    <i class="fas fa-user-shield fa-3x text-teal-400"></i>
+                </div>
+                <p class="text-gray-300 mb-6 text-lg text-center">Kami memahami kekhawatiran Anda terhadap penipuan online. Kami berkomitmen untuk memberikan layanan yang aman dan terpercaya.</p>
+                <ul class="space-y-4 text-gray-300 mb-8">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1 flex-shrink-0"></i>Layanan 100% resmi, hasil kerjasama langsung dengan pihak operator seluler.
+                    </li>
+                </ul>
+                <div class="bg-red-900/50 border-l-4 border-red-500 text-red-200 p-6 rounded-md shadow-md">
+                    <p class="font-bold text-lg mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>PENTING: Waspada Penipuan!</p>
+                    <p class="text-sm">Kami <strong class="font-semibold">TIDAK PERNAH</strong> meminta pembayaran ke rekening atas nama pribadi. Semua transaksi resmi <strong class="font-semibold">HANYA</strong> melalui rekening perusahaan atas nama: <strong class="font-bold text-red-300">Kuota Nasional</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section id="use-cases" class="py-16 sm:py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Solusi Internet Untuk Semua Kebutuhan</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-user-friends"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">Penggunaan Pribadi & Keluarga</h3>
+                        <p class="text-gray-400 text-sm">Internetan hemat dan lancar untuk kebutuhan sehari-hari di rumah.</p>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-store"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">Bisnis & Usaha WiFi RT/RW</h3>
+                        <p class="text-gray-400 text-sm">Jual kembali layanan WiFi dengan modal terjangkau di lingkungan Anda.</p>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-briefcase"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">Kantor & UMKM</h3>
+                        <p class="text-gray-400 text-sm">Koneksi internet stabil untuk mendukung produktivitas bisnis kecil Anda.</p>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-coffee"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">Cafe, Warkop & Kosan</h3>
+                        <p class="text-gray-400 text-sm">Sediakan fasilitas WiFi handal untuk pelanggan atau penghuni.</p>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-video"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">CCTV & Smart Home</h3>
+                        <p class="text-gray-400 text-sm">Pastikan sistem keamanan dan perangkat pintar Anda selalu online 24/7.</p>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl shadow-md card-hover flex items-start space-x-4 border border-gray-700">
+                    <div class="feature-icon text-xl flex-shrink-0"><i class="fas fa-gamepad"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1 text-white">Gamers & Streamers</h3>
+                        <p class="text-gray-400 text-sm">Koneksi ping rendah dan stabil untuk pengalaman gaming dan streaming tanpa lag.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form -->
+    <section id="order-form" class="py-16 sm:py-20 bg-gradient-to-br from-gray-900 to-bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title !text-white">Daftar Sekarang & Nikmati Internet Tanpa Batas!</h2>
+            </div>
+            <form id="registrationForm" class="max-w-lg mx-auto bg-card text-gray-200 p-8 sm:p-10 rounded-xl shadow-2xl border border-gray-700">
+                <p class="text-center text-gray-400 mb-6">Isi formulir di bawah ini untuk melakukan pendaftaran.</p>
+                <div class="bg-yellow-900/50 border-l-4 border-yellow-400 text-yellow-200 p-4 mb-6 rounded-md">
+                    <p class="text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Mohon periksa kembali data Anda dengan teliti sebelum melanjutkan.</p>
+                </div>
+                <div class="mb-6">
+                    <label for="nama" class="block text-sm font-medium text-gray-300 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                    <input type="text" id="nama" name="nama" required class="form-control w-full px-4 py-3 rounded-lg" placeholder="Contoh: John Doe">
+                </div>
+                <div class="mb-6">
+                    <label for="nomor_hp" class="block text-sm font-medium text-gray-300 mb-1">Nomor HP Utama (yang akan diinject) <span class="text-red-500">*</span></label>
+                    <input type="tel" id="nomor_hp" name="nomor_hp" required class="form-control w-full px-4 py-3 rounded-lg" placeholder="Contoh: 081234567890" oninput="this.value = this.value.replace(/[^0-9]/g, '')" pattern="08[0-9]{8,13}" title="Nomor HP harus diawali 08 dan terdiri dari 10-15 digit angka.">
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Alamat Email (Opsional)</label>
+                    <input type="email" id="email" name="email" class="form-control w-full px-4 py-3 rounded-lg" placeholder="Contoh: john.doe@example.com">
+                </div>
+                <div class="mb-6">
+                    <label for="paket" class="block text-sm font-medium text-gray-300 mb-1">Pilih Paket <span class="text-red-500">*</span></label>
+                    <select id="paket" name="paket" required class="form-control w-full px-4 py-3 rounded-lg appearance-none">
+                        <option value="" disabled selected>-- Pilih Durasi Paket --</option>
+                        <option value="3 Bulan - Rp 200.000" data-price="200000" data-duration="3 bulan">3 Bulan - Rp 200.000</option>
+                        <option value="6 Bulan - Rp 350.000" data-price="350000" data-duration="6 bulan">6 Bulan - Rp 350.000 (Populer)</option>
+                        <option value="12 Bulan - Rp 500.000" data-price="500000" data-duration="12 bulan">12 Bulan - Rp 500.000</option>
+                    </select>
+                </div>
+                <div id="additionalPhoneNumbersContainer" class="space-y-4 mb-8"></div>
+                <button type="submit" class="cta-button w-full bg-teal-400 text-gray-900 font-bold py-4 px-6 rounded-lg text-lg hover:bg-teal-300 shadow-md shadow-teal-500/20">
+                    <i class="fas fa-credit-card mr-2"></i> Lanjutkan ke Pembayaran
+                </button>
+            </form>
+
+            <!-- Payment Instruction Section - Hidden by default -->
+            <section id="paymentInstructionSection" class="payment-instruction-section max-w-2xl mx-auto" style="display: none;">
+                 <div class="text-center">
+                       <div class="payment-header mb-6">
+                             <h2 class="text-2xl sm:text-3xl font-bold mb-2">Selesaikan Pembayaran Anda</h2>
+                             <p class="text-md text-gray-400">Untuk mengaktifkan paket, silakan transfer dan konfirmasi pembayaran Anda.</p>
+                       </div>
+                       <div class="payment-amount-box">
+                             <p id="paymentAmountToTransfer">Rp 0</p>
+                             <button class="cta-button btn-primary w-full sm:w-auto text-sm py-2 px-4 rounded-full" onclick="copyToClipboard('paymentAmountToTransfer', 'Jumlah berhasil disalin!')">
+                                 <i class="fas fa-copy mr-1"></i> Salin Jumlah
+                             </button>
+                       </div>
+                       <p class="text-md text-gray-300 font-medium mb-2">Silakan Transfer ke Salah Satu Rekening Berikut:</p>
+                        <div class="space-y-4 my-6">
+                             <div class="app-card bank-card">
+                                 <div class="bank-logo-container">
+                                     <img alt="Logo BCA" class="bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png" />
+                                 </div>
+                                 <div class="bank-name-type">
+                                     <p class="bank-name">BCA Virtual Account</p>
+                                     <p class="bank-type">Pembayaran Instan</p>
+                                 </div>
+                                 <p class="account-number" id="bcaVaNumber">39358082113417071</p>
+                                 <p class="account-name-owner">a.n. Kuota Nasional</p>
+                                 <button class="cta-button btn-primary text-sm py-2 px-4 rounded-full mt-3" onclick="copyToClipboard('bcaVaNumber', 'Nomor Virtual Account BCA berhasil disalin!')">
+                                     <i class="fas fa-copy mr-1"></i> Salin No. VA
+                                 </button>
+                            </div>
+                           <div class="app-card bank-card">
+                                 <div class="bank-logo-container">
+                                     <img alt="Logo CIMB Niaga" class="bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1920px-CIMB_Niaga_logo.svg.png" />
+                                 </div>
+                                 <div class="bank-name-type">
+                                     <p class="bank-name">CIMB Niaga</p>
+                                     <p class="bank-type">Transfer Bank</p>
+                                 </div>
+                                 <p class="account-number" id="cimbAccountNumber">8099082113417071</p>
+                                 <p class="account-name-owner">a.n. Kuota Nasional</p>
+                                 <button class="cta-button btn-primary text-sm py-2 px-4 rounded-full mt-3" onclick="copyToClipboard('cimbAccountNumber', 'Nomor Rekening CIMB Niaga berhasil disalin!')">
+                                     <i class="fas fa-copy mr-1"></i> Salin No. Rekening
+                                 </button>
+                            </div>
+                           <div class="app-card bank-card">
+                                 <div class="bank-logo-container">
+                                     <img alt="Logo Permata Bank" class="bank-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Permata_Bank_%282024%29.svg/1920px-Permata_Bank_%282024%29.svg.png" />
+                                 </div>
+                                 <div class="bank-name-type">
+                                     <p class="bank-name">Permata Bank</p>
+                                     <p class="bank-type">Transfer Bank</p>
+                                 </div>
+                                 <p class="account-number" id="permataAccountNumber">8528081263983950</p>
+                                 <p class="account-name-owner">a.n. DNID081263983950</p>
+                                 <button class="cta-button btn-primary text-sm py-2 px-4 rounded-full mt-3" onclick="copyToClipboard('permataAccountNumber', 'Nomor Rekening Permata Bank berhasil disalin!')">
+                                     <i class="fas fa-copy mr-1"></i> Salin No. Rekening
+                                 </button>
+                            </div>
+                        </div>
+
+                       <!-- UPLOAD BUKTI TRANSFER -->
+                       <div class="payment-note mb-6">
+                           <p><i class="fas fa-info-circle"></i>Setelah melakukan transfer, mohon <strong>unggah bukti pembayaran</strong> Anda untuk mempercepat proses verifikasi.</p>
+                       </div>
+
+                       <div class="mb-6">
+                           <label for="proofOfTransfer" class="block text-sm font-medium text-gray-300 mb-2">Upload Bukti Transfer <span class="text-red-500">*</span></label>
+                           <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 border-dashed rounded-md">
+                               <div class="space-y-1 text-center">
+                                   <i class="fas fa-file-upload text-4xl text-gray-500"></i>
+                                   <div class="flex text-sm text-gray-400 justify-center">
+                                       <label for="proofOfTransfer" class="relative cursor-pointer bg-gray-700 rounded-md font-medium text-teal-400 hover:text-teal-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-800 focus-within:ring-teal-500 px-2 py-1">
+                                           <span>Pilih file</span>
+                                           <input id="proofOfTransfer" name="proofOfTransfer" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg">
+                                       </label>
+                                       <p class="pl-1 self-center">atau seret dan lepas</p>
+                                   </div>
+                                   <p id="fileNameDisplay" class="text-xs text-gray-500">PNG, JPG, JPEG (Maks. 5MB)</p>
+                               </div>
+                           </div>
+                       </div>
+                       
+                        <button id="confirmationButton" type="button" class="cta-button btn-success w-full py-3 px-6 text-base shadow-md hover:shadow-lg mt-4 rounded-full transition-all duration-300 flex justify-center items-center">
+                          <i class="fas fa-check-circle mr-2"></i> Konfirmasi Pembayaran
+                        </button>
+                   </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title">Pertanyaan Umum (FAQ)</h2>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="faq-item">
+                    <details>
+                        <summary>Apa perbedaan layanan ini dengan IndiHome atau layanan WiFi kabel lainnya?</summary>
+                        <div class="faq-answer">
+                            <p>Perbedaan utamanya terletak pada <strong>teknologi</strong> dan <strong>fleksibilitas</strong>.</p>
+                            <ul class="space-y-2">
+                                <li><strong>Layanan Kami (Seluler):</strong> Menggunakan jaringan seluler (4G/5G) sehingga bersifat mobile. Anda bisa membawa modem dan kartu ke mana saja, cocok untuk yang sering bepergian atau tinggal di area yang belum terjangkau kabel fiber. Aktivasi instan tanpa perlu teknisi.</li>
+                                <li><strong>Layanan WiFi Kabel:</strong> Menggunakan kabel fiber optik yang ditanam atau dipasang di tiang. Koneksi cenderung lebih stabil namun terbatas hanya di satu lokasi (rumah/kantor) dan memerlukan proses instalasi oleh teknisi yang memakan waktu.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Apakah layanan ini bisa dijadikan WiFi untuk di rumah atau usaha?</summary>
+                        <div class="faq-answer">
+                            <p><strong>Tentu saja, sangat bisa!</strong> Ini adalah salah satu kegunaan paling populer dari layanan kami. Caranya sangat mudah:</p>
+                             <ul class="space-y-2">
+                                <li>Masukkan kartu SIM yang telah kami inject paket ke dalam perangkat <strong>Mifi (Modem WiFi Portabel)</strong> atau <strong>Router WiFi GSM</strong>.</li>
+                                <li>Nyalakan perangkat tersebut, dan Anda langsung memiliki jaringan WiFi sendiri.</li>
+                                <li>Anda bisa membagikan koneksi internet ke banyak perangkat sekaligus seperti HP, laptop, Smart TV, dan lainnya. Sangat cocok untuk kebutuhan WiFi di rumah, kos-kosan, warung kopi, atau UMKM.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Bisa digunakan di lokasi mana saja?</summary>
+                        <div class="faq-answer">
+                            <p>Layanan kami bisa digunakan di <strong>seluruh wilayah Indonesia</strong>, dari Sabang sampai Merauke, selama lokasi Anda terjangkau oleh sinyal 4G dari operator seluler yang kartunya Anda gunakan. Ini memberikan kebebasan penuh bagi Anda untuk tetap online di mana pun Anda berada.</p>
+                        </div>
+                    </details>
+                </div>
+                 <div class="faq-item">
+                    <details>
+                        <summary>Bagaimana cara cek paket sudah aktif atau belum?</summary>
+                        <div class="faq-answer">
+                            <p>Setelah kami mengonfirmasi pembayaran Anda, paket akan segera kami proses. Untuk mengecek statusnya, cara termudah adalah melalui <strong>aplikasi resmi dari operator</strong> kartu SIM yang Anda gunakan. Silakan unduh aplikasi yang sesuai:</p>
+                            <ul>
+                                <li><strong>Telkomsel:</strong> MyTelkomsel</li>
+                                <li><strong>Indosat Ooredoo:</strong> myIM3</li>
+                                <li><strong>XL Axiata:</strong> myXL</li>
+                                <li><strong>Axis:</strong> AXISnet</li>
+                                <li><strong>Tri (3):</strong> Bima+</li>
+                                <li><strong>Smartfren:</strong> MySmartfren</li>
+                                <li><strong>by.U:</strong> Aplikasi by.U</li>
+                                <li><strong>Live.On:</strong> Aplikasi Live.On</li>
+                            </ul>
+                            <p>Biasanya, akan muncul notifikasi atau perubahan pada detail paket di aplikasi tersebut setelah berhasil diaktifkan.</p>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Bagaimana cara perpanjangan paket jika sudah habis masa aktifnya?</summary>
+                        <div class="faq-answer">
+                           <p>Layanan kami dirancang untuk fleksibilitas. Ada dua cara mudah untuk memperpanjang paket Anda:</p>
+                           <ol class="list-decimal list-inside space-y-2 mt-2">
+                               <li>
+                                   <strong>Perpanjangan Otomatis (Rekomendasi):</strong><br>
+                                   Pastikan pulsa pada nomor yang terdaftar mencukupi sesuai harga paket sebelum masa aktifnya berakhir. Sistem kami akan mencoba memperpanjang paket secara otomatis jika pulsa tersedia, sehingga layanan Anda tidak terputus.<br>
+                                   <span class="text-sm"><em>Contoh: Untuk memperpanjang Paket 3 Bulan (Rp 200.000), pastikan pulsa Anda minimal Rp 200.000 sebelum tanggal berakhirnya paket.</em></span>
+                               </li>
+                               <li>
+                                   <strong>Pembelian Ulang Manual:</strong><br>
+                                   Jika Anda tidak ingin perpanjangan otomatis atau pulsa tidak mencukupi, Anda bisa kapan saja membeli paket baru dengan mengisi kembali formulir pendaftaran di halaman ini.
+                               </li>
+                           </ol>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Bagaimana cara berhenti berlangganan?</summary>
+                        <div class="faq-answer">
+                            <p>Sangat mudah, karena pada dasarnya <strong>tidak ada sistem langganan yang mengikat</strong>. Anda memiliki kendali penuh untuk berhenti kapan saja.</p>
+                            <p>Caranya adalah dengan <strong>tidak melakukan pembelian ulang</strong> atau memastikan pulsa tidak mencukupi untuk perpanjangan otomatis. Paket Anda akan berhenti secara otomatis pada akhir periode masa aktif tanpa ada denda atau tagihan lebih lanjut.</p>
+                        </div>
+                    </details>
+                </div>
+                 <div class="faq-item">
+                    <details>
+                        <summary>Apa itu fitur nomor tambahan dan bagaimana cara kerjanya?</summary>
+                        <div class="faq-answer">
+                            <p>Fitur nomor tambahan adalah keuntungan eksklusif untuk <strong>Paket 6 Bulan dan 12 Bulan</strong> yang memungkinkan Anda berbagi manfaat internet unlimited ke beberapa nomor lain milik Anda atau keluarga.</p>
+                             <ul class="space-y-2">
+                                <li><strong>Paket 6 Bulan:</strong> Anda mendapatkan total <strong>2 slot</strong> (1 nomor utama + 1 nomor tambahan).</li>
+                                <li><strong>Paket 12 Bulan:</strong> Anda mendapatkan total <strong>4 slot</strong> (1 nomor utama + 3 nomor tambahan).</li>
+                            </ul>
+                            <p>Anda bisa memasukkan nomor-nomor tambahan ini pada kolom yang tersedia di formulir pendaftaran. Semua nomor tersebut akan mendapatkan akses internet unlimited yang sama persis dengan nomor utama selama periode paket aktif.</p>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Apakah ada batasan FUP (Fair Usage Policy)?</summary>
+                        <div class="faq-answer">
+                            <p><strong>Tidak ada!</strong> Kami menjamin layanan kami benar-benar unlimited <strong>tanpa FUP</strong>. Artinya, kecepatan internet Anda tidak akan diturunkan atau dilambatkan meskipun pemakaian Anda sudah sangat tinggi. Anda bebas download, streaming, dan browsing sepuasnya dengan kecepatan maksimal selama 24 jam penuh.</p>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Berapa kecepatan internet yang saya dapatkan?</summary>
+                        <div class="faq-answer">
+                            <p>Kecepatan yang bisa Anda dapatkan berkisar antara <strong>80 hingga 120 Mbps</strong>. Namun, perlu diingat bahwa ini adalah kecepatan maksimal.</p>
+                            <p>Kecepatan aktual di lapangan dapat bervariasi karena dipengaruhi oleh beberapa faktor, seperti:</p>
+                             <ul class="space-y-2">
+                                 <li><strong>Kekuatan sinyal</strong> operator di lokasi Anda.</li>
+                                 <li><strong>Kepadatan lalu lintas</strong> jaringan di area tersebut.</li>
+                                 <li><strong>Kemampuan perangkat</strong> (modem atau HP) yang Anda gunakan.</li>
+                             </ul>
+                        </div>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Perangkat apa saja yang mendukung layanan ini?</summary>
+                        <div class="faq-answer">
+                             <p>Layanan kami sangat fleksibel dan kompatibel dengan hampir semua perangkat yang mendukung kartu SIM, di antaranya:</p>
+                             <ul>
+                                <li>HP/Smartphone (Android & iOS)</li>
+                                <li>Mifi/Modem GSM (seperti Huawei, TP-Link, ZTE, dll.)</li>
+                                <li>Router WiFi GSM (untuk hotspot di rumah atau usaha)</li>
+                                <li>Laptop/PC (melalui modem USB atau tethering dari HP)</li>
+                                <li>Smart TV & Set-Top Box Android (untuk streaming)</li>
+                                <li>CCTV Online yang menggunakan SIM Card</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 sm:py-20 bg-card">
+        <div class="container mx-auto px-6 text-center">
+            <div class="section-title-container">
+                <h2 class="section-title">Butuh Bantuan atau Ada Pertanyaan?</h2>
+            </div>
+            <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+                Tim customer service kami siap membantu Anda dengan cepat dan ramah. Jangan ragu untuk menghubungi kami!
+            </p>
+            <a href="https://wa.me/6285691615383?text=Halo,%20saya%20tertarik%20dengan%20layanan%20inject%20paket%20internet%20unlimited."
+               target="_blank"
+               class="cta-button bg-green-500 text-white font-bold py-4 px-10 rounded-lg text-lg hover:bg-green-600 inline-flex items-center shadow-lg">
+                <i class="fab fa-whatsapp fa-lg mr-3"></i> Hubungi Kami via WhatsApp
+            </a>
+        </div>
+    </section>
+   
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-400 py-12 text-center border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <p class="text-sm">&#169; <span id="currentYear"></span> Paket Data Nasional. <span class="text-gray-500">All Rights Reserved.</span></p>
+        </div>
+    </footer>
+
+    <div class="notif-container"></div>
+   
+    <!-- Modal for general messages -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('myModal')">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button onclick="closeModal('myModal')">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal for Success Confirmation -->
+    <div id="successModal" class="modal">
+        <div class="modal-content !bg-gray-800 border-teal-500/30 !max-w-sm">
+            <div class="text-center p-4 sm:p-6">
+                 <div class="mx-auto flex items-center justify-center h-24 w-24 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="filter: drop-shadow(0 0 8px var(--accent));">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25L4.5 5.25v5.03c0 4.814 3.033 9.173 7.5 10.97 4.467-1.797 7.5-6.156 7.5-10.97V5.25L12 2.25z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 2.25 2.25L15 11.25" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2 !text-white">Pembayaran Berhasil</h3>
+                <p class="text-gray-400 mb-8 !text-gray-300">Paket Anda dalam proses Aktivasi.</p>
+                <div class="text-left space-y-3 text-sm border-t border-b border-gray-600 py-6">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Nomor Tujuan</span>
+                        <span id="successNomorTujuan" class="font-semibold text-white"></span>
+                    </div>
+                    <!-- Container untuk nomor tambahan, akan diisi oleh JS -->
+                    <div id="successAdditionalNumbers" class="space-y-3"></div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Masa Aktif</span>
+                        <span id="successMasaAktif" class="font-semibold text-white"></span>
+                    </div>
+                     <div class="flex justify-between">
+                        <span class="text-gray-400">Berlaku Hingga</span>
+                        <span id="successBerlakuHingga" class="font-semibold text-white"></span>
+                    </div>
+                     <div class="flex justify-between">
+                        <span class="text-gray-400">ID Transaksi</span>
+                        <span id="successIdTransaksi" class="font-semibold text-white"></span>
+                    </div>
+                </div>
+                <button id="backToHomeButton" class="w-full mt-10 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Kembali ke Beranda</button>
+            </div>
+        </div>
+    </div>
+   
+    <script>
+        // --- Three.js Globe Animation ---
+        window.onload = function() {
+            // Mengambil elemen header
+            const heroSection = document.querySelector('.hero-bg');
+            if (!heroSection) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, heroSection.clientWidth / heroSection.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
+           
+            renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+            camera.position.z = 2.5;
+           
+            // Menambahkan bintang/partikel
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 7000;
+            const posArray = new Float32Array(starsCount * 3);
+            const sphereRadius = 1.4;
+
+            for(let i = 0; i < starsCount * 3; i+=3) {
+                 // Membuat titik dalam sebuah bola, kemudian menormalkannya ke permukaan
+                let x = (Math.random() - 0.5) * 2;
+                let y = (Math.random() - 0.5) * 2;
+                let z = (Math.random() - 0.5) * 2;
+                const vec = new THREE.Vector3(x, y, z);
+                vec.normalize();
+                vec.multiplyScalar(sphereRadius);
+               
+                posArray[i] = vec.x;
+                posArray[i+1] = vec.y;
+                posArray[i+2] = vec.z;
+            }
+
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+             const starsMaterial = new THREE.PointsMaterial({
+                size: 0.015,
+                color: 0x2dd4bf, // Warna Teal
+                transparent: true,
+                opacity: 0.7
+            });
+            const starField = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starField);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                starField.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Menyesuaikan ukuran canvas saat window diresize
+            window.addEventListener('resize', () => {
+                renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+                camera.aspect = heroSection.clientWidth / heroSection.clientHeight;
+                camera.updateProjectionMatrix();
+            });
+        };
+
+        // Set current year in footer dynamically
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- Package Selection and Form Logic ---
+        const form = document.getElementById('registrationForm');
+        const packageSelect = document.getElementById('paket');
+        const additionalPhonesContainer = document.getElementById('additionalPhoneNumbersContainer');
+        const paymentInstructionSection = document.getElementById('paymentInstructionSection');
+        const paymentAmountToTransferEl = document.getElementById('paymentAmountToTransfer');
+       
+        // New elements for payment confirmation flow
+        const proofInput = document.getElementById('proofOfTransfer');
+        const confirmationButton = document.getElementById('confirmationButton');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const successModal = document.getElementById('successModal');
+
+        const phoneInputSharedAttributes = `
+            class="form-control w-full px-4 py-3 rounded-lg"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            pattern="08[0-9]{8,13}"
+            title="Nomor HP harus diawali 08 dan terdiri dari 10-15 digit angka."
+            placeholder="08xxxxxxxxxx"
+        `;
+       
+        // Initially disable the confirmation button
+        confirmationButton.disabled = true;
+
+        function selectPackage(packageName) {
+            packageSelect.value = packageName;
+            const event = new Event('change');
+            packageSelect.dispatchEvent(event);
+            const orderFormSection = document.getElementById('order-form');
+            if (orderFormSection) {
+                orderFormSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        packageSelect.addEventListener('change', function () {
+            additionalPhonesContainer.innerHTML = '';
+            const selectedPackageValue = this.value;
+             if (this.value) {
+                this.classList.add('filled');
+            }
+
+            if (selectedPackageValue.includes('6 Bulan')) {
+                addPhoneNumberField(1, "Nomor Tambahan 1 (Opsional)", "nomor_tambahan_1");
+            } else if (selectedPackageValue.includes('12 Bulan')) {
+                addPhoneNumberField(1, "Nomor Tambahan 1 (Opsional)", "nomor_tambahan_1");
+                addPhoneNumberField(2, "Nomor Tambahan 2 (Opsional)", "nomor_tambahan_2");
+                addPhoneNumberField(3, "Nomor Tambahan 3 (Opsional)", "nomor_tambahan_3");
+            }
+        });
+
+        function addPhoneNumberField(index, labelText, inputName) {
+            const div = document.createElement('div');
+            div.classList.add('mb-6');
+            div.innerHTML = `
+                <label for="${inputName}" class="block text-sm font-medium text-gray-300 mb-1">${labelText}</label>
+                <input type="tel" id="${inputName}" name="${inputName}" ${phoneInputSharedAttributes}>
+            `;
+            additionalPhonesContainer.appendChild(div);
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            const formData = new FormData(form);
+            const selectedPackageOption = packageSelect.options[packageSelect.selectedIndex];
+            const packagePrice = selectedPackageOption.dataset.price;
+           
+            paymentAmountToTransferEl.textContent = `Rp${parseInt(packagePrice).toLocaleString('id-ID')}`;
+           
+            // Hide the form and show payment instructions
+            form.style.display = 'none';
+            paymentInstructionSection.style.display = 'block';
+            paymentInstructionSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Event listener for file input
+        proofInput.addEventListener('change', () => {
+            if (proofInput.files.length > 0) {
+                confirmationButton.disabled = false;
+                fileNameDisplay.textContent = proofInput.files[0].name;
+                fileNameDisplay.classList.remove('text-gray-500');
+                fileNameDisplay.classList.add('text-teal-400');
+            } else {
+                confirmationButton.disabled = true;
+                fileNameDisplay.textContent = 'PNG, JPG, JPEG (Maks. 5MB)';
+                fileNameDisplay.classList.add('text-gray-500');
+                fileNameDisplay.classList.remove('text-teal-400');
+            }
+        });
+
+        // Event listener for the new confirmation button with loading simulation
+        confirmationButton.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            // --- Start Loading ---
+            const originalButtonContent = confirmationButton.innerHTML;
+            confirmationButton.disabled = true;
+            confirmationButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Memeriksa Pembayaran...
+            `;
+           
+            setTimeout(() => {
+                // --- End Loading ---
+               
+                // 1. Gather data from the form
+                const formData = new FormData(form);
+                const nomorHp = formData.get('nomor_hp');
+                const additionalNumbersRaw = [
+                    formData.get('nomor_tambahan_1'),
+                    formData.get('nomor_tambahan_2'),
+                    formData.get('nomor_tambahan_3')
+                ];
+                const additionalNumbers = additionalNumbersRaw.filter(num => num && num.trim() !== ''); // Filter out empty/null values
+                
+                const selectedPackageOption = packageSelect.options[packageSelect.selectedIndex];
+                const packageDurationText = selectedPackageOption.dataset.duration;
+                const durationMonths = parseInt(packageDurationText);
+
+                // 2. Calculate expiry date
+                const today = new Date();
+                const expiryDate = new Date(new Date().setMonth(today.getMonth() + durationMonths));
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                const formattedExpiryDate = expiryDate.toLocaleDateString('id-ID', options);
+
+                // 3. Generate a unique Transaction ID
+                const date = new Date();
+                const transactionId = `KN-${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+                // 4. Populate the success modal
+                const nomorTujuanLabel = document.querySelector('#successNomorTujuan').previousElementSibling;
+                nomorTujuanLabel.textContent = additionalNumbers.length > 0 ? 'Nomor Utama' : 'Nomor Tujuan';
+                document.getElementById('successNomorTujuan').textContent = nomorHp;
+
+                const additionalNumbersContainer = document.getElementById('successAdditionalNumbers');
+                additionalNumbersContainer.innerHTML = ''; // Clear previous content
+
+                if (additionalNumbers.length > 0) {
+                    let htmlContent = '';
+                    additionalNumbers.forEach((num, index) => {
+                        htmlContent += `
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Nomor Tambahan ${index + 1}</span>
+                                <span class="font-semibold text-white">${num}</span>
+                            </div>
+                        `;
+                    });
+                    additionalNumbersContainer.innerHTML = htmlContent;
+                }
+                
+                document.getElementById('successMasaAktif').textContent = packageDurationText;
+                document.getElementById('successBerlakuHingga').textContent = formattedExpiryDate;
+                document.getElementById('successIdTransaksi').textContent = transactionId;
+
+                // 5. Hide payment section and show the success modal
+                paymentInstructionSection.style.display = 'none';
+                successModal.style.display = 'flex';
+
+            }, 2500); // 2.5 second delay
+        });
+
+        // Listener for the "Kembali ke Beranda" button
+        document.getElementById('backToHomeButton').addEventListener('click', () => {
+            location.reload(); // Reload the page to reset everything
+        });
+
+
+        // --- Copy to Clipboard ---
+        function copyToClipboard(elementId, successMessage) {
+            const element = document.getElementById(elementId);
+            let textToCopy = '';
+            if (elementId === 'paymentAmountToTransfer') {
+                textToCopy = element.textContent.replace('Rp', '').replace(/\./g, '').trim();
+            } else {
+                textToCopy = element.textContent.trim();
+            }
+
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                showModal('myModal', 'Berhasil!', successMessage);
+            } catch (err) {
+                showModal('myModal', 'Gagal!', 'Gagal menyalin. Silakan salin secara manual.');
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        // --- Modal / Message Box Functions ---
+        function showModal(modalId, title, message) {
+            const modal = document.getElementById(modalId);
+            const modalTitle = modal.querySelector('#modalTitle');
+            const modalMessage = modal.querySelector('#modalMessage');
+
+            if (modalTitle && modalMessage) {
+                modalTitle.textContent = title;
+                modalMessage.innerHTML = message;
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+       
+        window.onclick = function (event) {
+             if (event.target.classList.contains('modal')) {
+               event.target.style.display = 'none';
+             }
+        }
+
+
+        // --- Active Customer Counter Animation ---
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString('id-ID');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        const customerCounterElement = document.getElementById('customerCounter');
+        if (customerCounterElement) {
+            const targetCustomerCount = 15789;
+            const animationDuration = 2500;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateValue(customerCounterElement, 0, targetCustomerCount, animationDuration);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            observer.observe(customerCounterElement);
+        }
+
+        // --- Transaction Notification Logic ---
+        const notificationsContainer = document.querySelector('.notif-container');
+        const indonesianNames = [
+            "Joko Wibowo", "Dewi Ayu", "Kevin Aldiano", "Ratna Wulandari", "Muhammad Rizki",
+            "Ahmad Ramadhan", "Oka Wirawan", "Citra Lestari", "Samsul Anwar", "Nadia Permata",
+            "Hendri Kurniawan", "Bayu Firmansyah", "Wahyu Setiawan", "Putra Aditya", "Vera Susanti",
+            "Irfan Hakim", "Kartika Putri", "Lestari Dewi", "Budi Santoso", "Faisal Nugroho",
+            "Siti Rohmah", "Xena Paramitha", "Desi Anggraini", "Teguh Pranoto", "Rina Amelia",
+            "Usman Syahputra", "Prasetyo Adi", "Yusuf Kurniawan", "Elvira Salsabila", "Dedeh Kurniasih",
+            "Qisthi Rahman", "Taufik Hidayat", "Maya Indriani", "Gita Anindya", "Naufal Fadillah",
+            "Farhan Maulana", "Maruli Tua", "Endang Wahyuni", "Nyoman Wati", "Poltak Aritonang",
+            "Zaenab Mahmud", "Felicia Hartono", "Iwan Setiawan", "Christofel Pangemanan", "Selfina Kambu",
+            "Yulia Safitri", "Gede Pratama", "Simon Tabuni", "Umi Khairunnisa", "Zahra Ramadhani"
+        ];
+        const packageOptionsForNotif = [{ duration: "3 bulan" }, { duration: "6 bulan" }, { duration: "12 bulan" }];
+
+        function showRandomNotification() {
+            if (!notificationsContainer) return;
+           
+            const randomName = indonesianNames[Math.floor(Math.random() * indonesianNames.length)];
+            const randomPackageInfo = packageOptionsForNotif[Math.floor(Math.random() * packageOptionsForNotif.length)];
+           
+            const notifBox = document.createElement('div');
+            notifBox.classList.add('notif-box');
+           
+            notifBox.innerHTML = `
+                <div class="notif-icon-wrapper"><i class="fas fa-check"></i></div>
+                <div class="notif-content-area">
+                    <div class="notif-title">Pembelian Berhasil!</div>
+                    <div class="notif-message"><strong>${randomName}</strong> telah membeli paket <strong class="font-semibold">${randomPackageInfo.duration}</strong>.</div>
+                    <div class="notif-time"><i class="far fa-clock"></i> Baru saja</div>
+                </div>
+            `;
+           
+            notificationsContainer.appendChild(notifBox);
+
+            // Trigger animation
+            setTimeout(() => {
+                notifBox.style.opacity = '1';
+                notifBox.style.transform = 'translateX(-50%) translateY(0) scale(1)';
+            }, 100);
+
+
+            // Hide and remove after animation
+            setTimeout(() => {
+                 notifBox.style.opacity = '0';
+                 notifBox.style.transform = 'translateX(-50%) translateY(-25px) scale(0.95)';
+                 setTimeout(() => notifBox.remove(), 500);
+            }, 6000);
+        }
+
+        // Show a notification every 10-15 seconds
+        setInterval(showRandomNotification, Math.random() * (15000 - 10000) + 10000);
+        // Show one notification initially after a short delay
+        setTimeout(showRandomNotification, 3000);
+
+    </script>
+</body>
+</html>
