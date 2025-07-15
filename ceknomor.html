@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Ketersediaan Paket Unlimited</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --bg-dark: #081024;
+            --bg-card: #111827;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+            --accent: #2dd4bf;
+            --accent-dark: #14b8a6;
+            --success: #10B981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+        }
+
+        .section-title-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            position: relative;
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        /* Modal / Message Box Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            margin: auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+            border: 1px solid #4B5563;
+        }
+
+        #successModal .modal-content {
+            animation: success-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes success-glow {
+            from {
+                box-shadow: 0 0 15px rgba(45, 212, 191, 0.2), 0 0 30px rgba(45, 212, 191, 0.1);
+            }
+            to {
+                box-shadow: 0 0 25px rgba(45, 212, 191, 0.4), 0 0 50px rgba(45, 212, 191, 0.2);
+            }
+        }
+
+        .form-control {
+            background-color: var(--bg-dark) !important;
+            border: 1px solid #374151 !important;
+            color: var(--text-primary) !important;
+        }
+
+        .form-control:focus {
+            --tw-ring-color: var(--accent) !important;
+            border-color: var(--accent) !important;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary) !important;
+        }
+
+        /* Override browser autofill styles */
+        .form-control:-webkit-autofill,
+        .form-control:-webkit-autofill:hover,
+        .form-control:-webkit-autofill:focus,
+        .form-control:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px var(--bg-dark) inset !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+        
+        select.form-control {
+            color: var(--text-secondary); /* Placeholder color */
+        }
+        select.form-control.filled, select.form-control:valid {
+            color: var(--text-primary);
+        }
+        select.form-control option {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+        }
+        select.form-control option[value=""][disabled] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Check Form -->
+    <section id="check-form-section" class="py-16 sm:py-20 bg-gradient-to-br from-gray-900 to-bg-dark min-h-screen flex items-center">
+        <div class="container mx-auto px-6">
+            <div class="section-title-container">
+                <h2 class="section-title !text-white">Cek Nomor Anda</h2>
+            </div>
+            <form id="checkForm" class="max-w-lg mx-auto bg-card text-gray-200 p-8 sm:p-10 rounded-xl shadow-2xl border border-gray-700">
+                <p class="text-center text-gray-400 mb-8">Masukkan nomor HP Anda untuk memeriksa apakah dapat mendaftar Paket Internet Unlimited.</p>
+                
+                <div class="mb-6">
+                    <label for="operator" class="block text-sm font-medium text-gray-300 mb-1">Pilih Operator <span class="text-red-500">*</span></label>
+                    <select id="operator" name="operator" required class="form-control w-full px-4 py-3 rounded-lg appearance-none">
+                        <option value="" disabled selected>-- Pilih Operator Seluler --</option>
+                        <option value="Telkomsel">Telkomsel</option>
+                        <option value="Indosat Ooredoo">Indosat Ooredoo</option>
+                        <option value="XL Axiata">XL Axiata</option>
+                        <option value="Axis">Axis</option>
+                        <option value="Tri (3)">Tri (3)</option>
+                        <option value="Smartfren">Smartfren</option>
+                        <option value="by.U">by.U</option>
+                        <option value="Live.On">Live.On</option>
+                    </select>
+                </div>
+
+                <div class="mb-8">
+                    <label for="nomor_hp" class="block text-sm font-medium text-gray-300 mb-1">Nomor HP <span class="text-red-500">*</span></label>
+                    <input type="tel" id="nomor_hp" name="nomor_hp" required class="form-control w-full px-4 py-3 rounded-lg" placeholder="Contoh: 081234567890" oninput="this.value = this.value.replace(/[^0-9]/g, '')" pattern="08[0-9]{8,13}" title="Nomor HP harus diawali 08 dan terdiri dari 10-15 digit angka.">
+                </div>
+
+                <button id="submitButton" type="submit"
+                    class="cta-button w-full bg-teal-400 text-gray-900 font-bold py-4 px-6 rounded-lg text-lg hover:bg-teal-300 shadow-md shadow-teal-500/20 flex items-center justify-center">
+                    <i class="fas fa-search mr-2"></i> Cek Sekarang
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Modal for Success Confirmation -->
+    <div id="successModal" class="modal">
+        <div class="modal-content !bg-gray-800 border-teal-500/30 !max-w-md">
+            <div class="text-center p-4">
+                <div class="mx-auto flex items-center justify-center h-20 w-20 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-teal-400" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.5"
+                        style="filter: drop-shadow(0 0 8px var(--accent));">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 2.25L4.5 5.25v5.03c0 4.814 3.033 9.173 7.5 10.97 4.467-1.797 7.5-6.156 7.5-10.97V5.25L12 2.25z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 2.25 2.25L15 11.25" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2 !text-white">Verifikasi Berhasil: Nomor Dapat Didaftarkan</h3>
+                <p class="text-gray-400 mb-6 !text-gray-300">Nomor Anda dapat digunakan untuk mendaftar Paket Internet Unlimited.</p>
+                <div class="text-left space-y-3 text-sm border-t border-b border-gray-600 py-4 my-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Nomor yang Dicek</span>
+                        <span id="successNomorTujuan" class="font-semibold text-white text-base"></span>
+                    </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Status</span>
+                        <span id="successStatus" class="font-semibold text-teal-400 text-base bg-teal-900/50 px-2 py-1 rounded"></span>
+                    </div>
+                     <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Penawaran</span>
+                        <span id="successPenawaran" class="font-semibold text-white text-base"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">ID Pengecekan</span>
+                        <span id="successIdCek" class="font-semibold text-white text-base"></span>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500">Segera lakukan pendaftaran sebelum penawaran berakhir.</p>
+                <button id="checkAgainButton"
+                    class="w-full mt-6 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Cek Ulang</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Form Logic ---
+        const form = document.getElementById('checkForm');
+        const operatorSelect = document.getElementById('operator');
+        const submitButton = document.getElementById('submitButton');
+        const successModal = document.getElementById('successModal');
+        const checkFormSection = document.getElementById('check-form-section');
+
+        // Handle select input UI change
+        operatorSelect.addEventListener('change', function () {
+            if (this.value) {
+                this.classList.add('filled');
+            }
+        });
+
+        // --- Form Submission Logic ---
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            // --- Start Loading Simulation ---
+            const originalButtonContent = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Mengecek nomor...
+            `;
+
+            // Simulate network/processing delay to make it look real
+            setTimeout(() => {
+                // 1. Gather data from the form
+                const formData = new FormData(form);
+                const nomorHp = formData.get('nomor_hp');
+                
+                // 2. Generate a unique Check ID
+                const lastFourDigits = Math.floor(1000 + Math.random() * 9000);
+                const date = new Date();
+                const checkId = `CHK-${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${lastFourDigits}`;
+
+                // 3. Populate the success modal with convincing data
+                document.getElementById('successNomorTujuan').textContent = nomorHp;
+                document.getElementById('successStatus').textContent = 'DAPAT MENDAFTAR';
+                document.getElementById('successPenawaran').textContent = 'Paket Unlimited Super Cepat';
+                document.getElementById('successIdCek').textContent = checkId;
+
+                // 4. Hide form and show the success modal
+                checkFormSection.style.display = 'none';
+                successModal.style.display = 'flex';
+
+                // Restore button state in case user comes back
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonContent;
+
+            }, 2000); // 2 second delay for realism
+        });
+
+
+        // Listener for the "Cek Ulang" button
+        document.getElementById('checkAgainButton').addEventListener('click', () => {
+            location.reload(); // Reload the page to reset everything
+        });
+
+    </script>
+</body>
+
+</html>
