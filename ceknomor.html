@@ -182,10 +182,10 @@
 
     <!-- Modal for Success Confirmation -->
     <div id="successModal" class="modal">
-        <div class="modal-content !bg-gray-800 border-teal-500/30 !max-w-sm">
+        <div class="modal-content !bg-gray-800 border-teal-500/30 !max-w-xs">
             <div class="text-center p-4">
-                <div class="mx-auto flex items-center justify-center h-20 w-20 mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-teal-400" viewBox="0 0 24 24"
+                <div class="mx-auto flex items-center justify-center h-16 w-16 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-teal-400" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="1.5"
                         style="filter: drop-shadow(0 0 8px var(--accent));">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -193,29 +193,29 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 2.25 2.25L15 11.25" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-white mb-2 !text-white">Verifikasi Berhasil: Nomor Dapat Didaftarkan</h3>
-                <p class="text-gray-400 mb-6 !text-gray-300">Nomor Anda dapat digunakan untuk mendaftar Paket Internet Unlimited.</p>
-                <div class="text-left space-y-3 text-sm border-t border-b border-gray-600 py-4 my-4">
+                <h3 class="text-xl font-bold text-white mb-2 !text-white">Verifikasi Berhasil: Nomor Dapat Didaftarkan</h3>
+                <p class="text-gray-400 mb-4 !text-gray-300 text-sm">Nomor Anda dapat digunakan untuk mendaftar Paket Internet Unlimited.</p>
+                <div class="text-left space-y-2 text-sm border-t border-b border-gray-600 py-3 my-4">
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-400">Nomor yang Dicek</span>
-                        <span id="successNomorTujuan" class="font-semibold text-white text-base"></span>
+                        <span class="text-gray-400">Nomor</span>
+                        <span id="successNomorTujuan" class="font-semibold text-white"></span>
                     </div>
                      <div class="flex justify-between items-center">
                         <span class="text-gray-400">Status</span>
-                        <span id="successStatus" class="font-semibold text-teal-400 text-base bg-teal-900/50 px-2 py-1 rounded"></span>
+                        <span id="successStatus" class="font-semibold text-teal-400 bg-teal-900/50 px-2 py-1 rounded"></span>
                     </div>
                      <div class="flex justify-between items-center">
                         <span class="text-gray-400">Penawaran</span>
-                        <span id="successPenawaran" class="font-semibold text-white text-base"></span>
+                        <span id="successPenawaran" class="font-semibold text-white"></span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-400">ID Pengecekan</span>
-                        <span id="successIdCek" class="font-semibold text-white text-base"></span>
+                        <span class="text-gray-400">ID Cek</span>
+                        <span id="successIdCek" class="font-semibold text-white"></span>
                     </div>
                 </div>
-                <p class="text-xs text-gray-500">Segera lakukan pendaftaran sebelum penawaran berakhir.</p>
+                <p class="text-xs text-gray-500">Segera lakukan pendaftaran.</p>
                 <button id="checkAgainButton"
-                    class="w-full mt-6 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Cek Ulang</button>
+                    class="w-full mt-5 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Cek Ulang</button>
             </div>
         </div>
     </div>
