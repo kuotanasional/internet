@@ -18,6 +18,7 @@
             --accent: #2dd4bf;
             --accent-dark: #14b8a6;
             --success: #10B981;
+            --error: #F87171;
         }
 
         body {
@@ -204,29 +205,61 @@
                         <span class="text-gray-400">Status</span>
                         <span id="successStatus" class="font-semibold text-teal-400 bg-teal-900/50 px-2 py-1 rounded"></span>
                     </div>
-                     <div class="flex justify-between items-center">
-                        <span class="text-gray-400">Penawaran</span>
-                        <span id="successPenawaran" class="font-semibold text-white"></span>
-                    </div>
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">ID Cek</span>
                         <span id="successIdCek" class="font-semibold text-white"></span>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500">Segera lakukan pendaftaran.</p>
-                <button id="checkAgainButton"
-                    class="w-full mt-5 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Cek Ulang</button>
+                <button id="registerButton"
+                    class="w-full mt-5 bg-teal-400 text-gray-900 font-bold py-3 px-6 rounded-lg text-base hover:bg-teal-300 cta-button">Daftar Sekarang</button>
             </div>
         </div>
     </div>
 
+    <!-- Modal for Error Message -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content !bg-gray-800 border-red-500/30 !max-w-xs">
+            <div class="text-center p-4">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="filter: drop-shadow(0 0 8px var(--error));">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 !text-white">Verifikasi Gagal</h3>
+                <p id="errorMessage" class="text-gray-400 mb-4 !text-gray-300 text-sm"></p>
+                <button id="closeErrorButton" class="w-full mt-5 bg-red-500 text-white font-bold py-3 px-6 rounded-lg text-base hover:bg-red-600 cta-button">Coba Lagi</button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+        const operatorPrefixes = {
+            'Telkomsel': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
+            'by.U': ['0851'],
+            'Indosat Ooredoo': ['0814', '0815', '0816', '0855', '0856', '0857', '0858'],
+            'Tri (3)': ['0895', '0896', '0897', '0898', '0899'],
+            'XL Axiata': ['0817', '0818', '0819', '0859', '0877', '0878', '0879'],
+            'Live.On': ['0859'],
+            'Axis': ['0831', '0832', '0833', '0838'],
+            'Smartfren': ['0881', '0882', '0883', '0884', '0885', '0886', '0887', '0888', '0889']
+        };
+
         // --- Form Logic ---
         const form = document.getElementById('checkForm');
         const operatorSelect = document.getElementById('operator');
         const submitButton = document.getElementById('submitButton');
+        
+        // Modals
         const successModal = document.getElementById('successModal');
+        const errorModal = document.getElementById('errorModal');
         const checkFormSection = document.getElementById('check-form-section');
+        
+        // Error message elements
+        const errorMessage = document.getElementById('errorMessage');
+        const closeErrorButton = document.getElementById('closeErrorButton');
+
 
         // Handle select input UI change
         operatorSelect.addEventListener('change', function () {
@@ -238,6 +271,28 @@
         // --- Form Submission Logic ---
         form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent actual form submission
+
+            const formData = new FormData(form);
+            const nomorHp = formData.get('nomor_hp');
+            const selectedOperator = formData.get('operator');
+            
+            // Validation: Check if number is long enough for a prefix
+            if (nomorHp.length < 4) {
+                errorMessage.textContent = 'Nomor HP yang Anda masukkan terlalu pendek.';
+                errorModal.style.display = 'flex';
+                return;
+            }
+
+            const prefix = nomorHp.substring(0, 4);
+            const prefixesForOperator = operatorPrefixes[selectedOperator];
+
+            // Validation: Check if prefix matches the selected operator
+            if (prefixesForOperator && !prefixesForOperator.includes(prefix)) {
+                errorMessage.textContent = 'Nomor HP tidak sesuai dengan operator yang Anda pilih. Silakan periksa kembali.';
+                errorModal.style.display = 'flex';
+                return; // Stop execution if validation fails
+            }
+
 
             // --- Start Loading Simulation ---
             const originalButtonContent = submitButton.innerHTML;
@@ -252,22 +307,17 @@
 
             // Simulate network/processing delay to make it look real
             setTimeout(() => {
-                // 1. Gather data from the form
-                const formData = new FormData(form);
-                const nomorHp = formData.get('nomor_hp');
-                
-                // 2. Generate a unique Check ID
+                // 1. Generate a unique Check ID
                 const lastFourDigits = Math.floor(1000 + Math.random() * 9000);
                 const date = new Date();
                 const checkId = `CHK-${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${lastFourDigits}`;
 
-                // 3. Populate the success modal with convincing data
+                // 2. Populate the success modal with convincing data
                 document.getElementById('successNomorTujuan').textContent = nomorHp;
                 document.getElementById('successStatus').textContent = 'DAPAT MENDAFTAR';
-                document.getElementById('successPenawaran').textContent = 'Paket Unlimited Super Cepat';
                 document.getElementById('successIdCek').textContent = checkId;
 
-                // 4. Hide form and show the success modal
+                // 3. Hide form and show the success modal
                 checkFormSection.style.display = 'none';
                 successModal.style.display = 'flex';
 
@@ -279,9 +329,14 @@
         });
 
 
-        // Listener for the "Cek Ulang" button
-        document.getElementById('checkAgainButton').addEventListener('click', () => {
-            location.reload(); // Reload the page to reset everything
+        // Listener for the "Daftar Sekarang" button
+        document.getElementById('registerButton').addEventListener('click', () => {
+            window.location.href = 'https://kuotanasional.store'; // Redirect to the specified URL
+        });
+
+        // Listener for the "Coba Lagi" button in error modal
+        closeErrorButton.addEventListener('click', () => {
+            errorModal.style.display = 'none';
         });
 
     </script>
