@@ -125,23 +125,7 @@
             border-radius: 16px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; position: relative;
             animation: fadeIn 0.3s ease;
             border: 1px solid var(--border-color);
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        
-        @keyframes success-glow {
-            from {
-                box-shadow: 0 0 15px rgba(45, 212, 191, 0.2), 0 0 30px rgba(45, 212, 191, 0.1);
-            }
-            to {
-                box-shadow: 0 0 25px rgba(45, 212, 191, 0.4), 0 0 50px rgba(45, 212, 191, 0.2);
-            }
-        }
-
-        .modal-content.glow {
-            border-color: var(--accent);
-            animation: success-glow 2s ease-in-out infinite alternate;
-        }
-
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .modal-content .modal-body {
             /* This will hold the custom content */
@@ -271,11 +255,11 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="nama" class="block text-sm font-medium mb-1 text-gray-300">Nama Anda <span class="text-red-500">*</span></label>
-                                <input type="text" id="nama" name="nama" class="form-input w-full" placeholder="Masukkan nama lengkap Anda">
+                                <input type="text" id="nama" name="nama" class="form-input w-full" placeholder="Masukkan nama lengkap Anda" required>
                             </div>
                             <div>
-                                <label for="alamat" class="block text-sm font-medium mb-1 text-gray-300">Provinsi Anda <span class="text-red-500">*</span></label>
-                                <select id="alamat" name="alamat" class="form-input w-full">
+                                <label for="provinsi" class="block text-sm font-medium mb-1 text-gray-300">Pilih Provinsi Anda <span class="text-red-500">*</span></label>
+                                <select id="provinsi" name="provinsi" class="form-input w-full" required>
                                     <option value="" disabled selected>-- Pilih Provinsi --</option>
                                     <option value="Aceh">Aceh</option>
                                     <option value="Sumatera Utara">Sumatera Utara</option>
@@ -319,12 +303,12 @@
                             </div>
                             <div>
                                 <label for="nomor_hp" class="block text-sm font-medium mb-1 text-gray-300">Nomor HP yang akan diinject <span class="text-red-500">*</span></label>
-                                <input type="tel" id="nomor_hp" name="nomor_hp" class="form-input w-full" placeholder="Contoh: 081234567890">
+                                <input type="tel" id="nomor_hp" name="nomor_hp" class="form-input w-full" placeholder="Contoh: 081234567890" required>
                                 <p class="text-xs text-gray-500 mt-2 italic">Periksa kembali nomor HP anda pastikan sudah benar dan dalam kondisi aktif.</p>
                             </div>
                              <div>
                                 <label for="operator" class="block text-sm font-medium mb-1 text-gray-300">Pilih Operator Anda <span class="text-red-500">*</span></label>
-                                <select id="operator" name="operator" class="form-input w-full">
+                                <select id="operator" name="operator" class="form-input w-full" required>
                                     <option value="" disabled selected>-- Pilih Operator --</option>
                                     <option value="Telkomsel">Telkomsel</option>
                                     <option value="Indosat Ooredoo">Indosat Ooredoo</option>
@@ -340,24 +324,24 @@
 
                         <h2 class="text-xl font-bold mt-8 mb-4 text-white">3. Metode Pembayaran</h2>
                         <div class="space-y-3">
-                            <input type="radio" name="payment" id="bca-va" class="hidden payment-radio" value="bca" checked>
+                            <input type="radio" name="payment" id="bca-va" class="hidden payment-radio" value="BCA Virtual Account" checked>
                             <label for="bca-va" class="flex items-center p-4 border border-gray-700 bg-gray-800 rounded-lg cursor-pointer transition-all">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png" alt="BCA" class="h-8 mr-5 bg-white p-1 rounded">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png" alt="BCA" class="h-8 mr-5 bg-white p-1 rounded" onerror="this.style.display='none'">
                                 <span class="font-medium text-white">BCA Virtual Account</span>
                             </label>
-                            <input type="radio" name="payment" id="cimb" class="hidden payment-radio" value="cimb">
+                            <input type="radio" name="payment" id="cimb" class="hidden payment-radio" value="CIMB Niaga">
                             <label for="cimb" class="flex items-center p-4 border border-gray-700 bg-gray-800 rounded-lg cursor-pointer transition-all">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1920px-CIMB_Niaga_logo.svg.png" alt="CIMB Niaga" class="h-8 mr-5 bg-white p-1 rounded">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1920px-CIMB_Niaga_logo.svg.png" alt="CIMB Niaga" class="h-8 mr-5 bg-white p-1 rounded" onerror="this.style.display='none'">
                                 <span class="font-medium text-white">CIMB Niaga</span>
                             </label>
-                            <input type="radio" name="payment" id="permata" class="hidden payment-radio" value="permata">
+                            <input type="radio" name="payment" id="permata" class="hidden payment-radio" value="Permata Bank">
                             <label for="permata" class="flex items-center p-4 border border-gray-700 bg-gray-800 rounded-lg cursor-pointer transition-all">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Permata_Bank_%282024%29.svg/1920px-Permata_Bank_%282024%29.svg.png" alt="Permata Bank" class="h-8 mr-5 bg-white p-1 rounded">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Permata_Bank_%282024%29.svg/1920px-Permata_Bank_%282024%29.svg.png" alt="Permata Bank" class="h-8 mr-5 bg-white p-1 rounded" onerror="this.style.display='none'">
                                 <span class="font-medium text-white">Permata Bank</span>
                             </label>
-                             <input type="radio" name="payment" id="dana" class="hidden payment-radio" value="dana">
+                             <input type="radio" name="payment" id="dana" class="hidden payment-radio" value="DANA">
                             <label for="dana" class="flex items-center p-4 border border-gray-700 bg-gray-800 rounded-lg cursor-pointer transition-all">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/768px-Logo_dana_blue.svg.png" alt="DANA" class="h-8 mr-5 bg-white p-1 rounded">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/768px-Logo_dana_blue.svg.png" alt="DANA" class="h-8 mr-5 bg-white p-1 rounded" onerror="this.style.display='none'">
                                 <span class="font-medium text-white">DANA</span>
                             </label>
                         </div>
@@ -436,7 +420,6 @@
         };
 
         // --- CONFIGURATION ---
-        const uniqueCode = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
         const packages = {
             '3bln': {
                 name: "Paket 3 Bulan",
@@ -482,33 +465,6 @@
             }
         };
         
-        const paymentAccounts = {
-            bca: {
-                name: 'Kuota Nasional',
-                number: '39358081299200552',
-                bank: 'BCA Virtual Account',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png'
-            },
-            cimb: {
-                name: 'Kuota Nasional',
-                number: '8099081299200552',
-                bank: 'CIMB Niaga',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/CIMB_Niaga_logo.svg/1920px-CIMB_Niaga_logo.svg.png'
-            },
-            permata: {
-                name: 'DNID0895365297278',
-                number: '8528895365297278',
-                bank: 'Permata Bank',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Permata_Bank_%282024%29.svg/1920px-Permata_Bank_%282024%29.svg.png'
-            },
-            dana: {
-                name: 'DANA',
-                number: '0895365297278',
-                bank: '',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/768px-Logo_dana_blue.svg.png'
-            }
-        };
-
         const operatorPrefixes = {
             'Telkomsel': ['0811', '0812', '0813', '0821', '0822', '0823', '0851', '0852', '0853'],
             'by.U': ['0851'],
@@ -565,10 +521,6 @@
                          <span>Harga Paket</span>
                          <span class="font-medium text-white">${formatCurrency(pkg.price)}</span>
                      </div>
-                     <div class="flex justify-between">
-                         <span>Kode Unik</span>
-                         <span class="font-medium text-white">${formatCurrency(uniqueCode)}</span>
-                     </div>
                      <div class="border-t border-gray-700 my-2"></div>
                      <div class="flex justify-between font-bold text-lg text-white">
                          <span>Total</span>
@@ -581,12 +533,12 @@
             <div>
                 <h2 class="text-xl font-bold text-center mb-6 text-white">Testimoni Pelanggan</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(1).jpeg?raw=true" alt="Testimonial 1" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(2).jpeg?raw=true" alt="Testimonial 2" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(3).jpeg?raw=true" alt="Testimonial 3" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(4).jpeg?raw=true" alt="Testimonial 4" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(5).jpeg?raw=true" alt="Testimonial 5" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
-                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(6).jpeg?raw=true" alt="Testimonial 6" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(1).jpeg?raw=true" alt="Testimonial 1" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(2).jpeg?raw=true" alt="Testimonial 2" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(3).jpeg?raw=true" alt="Testimonial 3" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(4).jpeg?raw=true" alt="Testimonial 4" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(5).jpeg?raw=true" alt="Testimonial 5" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
+                    <img src="https://github.com/kuotanasional/internet/blob/main/testimoni%20(6).jpeg?raw=true" alt="Testimonial 6" class="testimonial-image rounded-lg w-full h-auto object-cover aspect-[3/4]" onerror="this.style.display='none'">
                 </div>
             </div>`;
 
@@ -690,7 +642,7 @@
                 <details class="faq-item">
                     <summary>Kebijakan Privasi</summary>
                     <div class="faq-content">
-                        <p>Kami sangat menghargai privasi Anda. Informasi pribadi yang Anda berikan, seperti nama, alamat, dan nomor HP, hanya akan digunakan untuk tujuan berikut:</p>
+                        <p>Kami sangat menghargai privasi Anda. Informasi pribadi yang Anda berikan, seperti nama, provinsi, dan nomor HP, hanya akan digunakan untuk tujuan berikut:</p>
                         <ul>
                             <li>Memproses dan mengaktifkan pesanan paket internet Anda.</li>
                             <li>Menghubungi Anda untuk konfirmasi dan informasi terkait layanan.</li>
@@ -721,7 +673,7 @@
 
         function updateDisplay(selectedPackageKey) {
             const pkg = packages[selectedPackageKey];
-            const totalPrice = pkg.price + uniqueCode;
+            const totalPrice = pkg.price;
 
             // Populate content
             const productInfoHTML = getProductInfoHTML(pkg);
@@ -757,16 +709,20 @@
             updateDisplay(selectedValue);
         }
 
-        function generateWaLink(formData, pkg, totalPrice) {
-            let pesanWA = `Halo, saya ingin konfirmasi pembayaran untuk pesanan:\n\n`;
-            pesanWA += `*ID Pesanan:* ${Date.now()}\n`;
-            pesanWA += `*Paket:* ${pkg.name}\n`;
+        function generateWaLink(formData, pkg) {
+            const paymentMethod = formData.get('payment');
+            
+            let pesanWA = `Halo, saya ingin mendaftar untuk paket internet premium.\n\n`;
+            pesanWA += `*FORMULIR PENDAFTARAN*\n`;
+            pesanWA += `--------------------------\n`;
             pesanWA += `*Nama:* ${formData.get('nama')}\n`;
-            pesanWA += `*Alamat:* ${formData.get('alamat')}\n`;
-            pesanWA += `*Nomor HP:* ${formData.get('nomor_hp')}\n`;
+            pesanWA += `*Nomor HP untuk di-Inject:* ${formData.get('nomor_hp')}\n`;
+            pesanWA += `*Provinsi:* ${formData.get('provinsi')}\n`;
             pesanWA += `*Operator:* ${formData.get('operator')}\n`;
-            pesanWA += `*Total Transfer:* ${formatCurrency(totalPrice)}\n\n`;
-            pesanWA += `Saya sudah melakukan transfer. Mohon untuk segera diproses. Terima kasih.`;
+            pesanWA += `*Paket yang Dipilih:* ${pkg.name}\n`;
+            pesanWA += `*Metode Pembayaran:* ${paymentMethod}\n`;
+            pesanWA += `--------------------------\n\n`;
+            pesanWA += `Mohon informasikan total biaya dan instruksi pembayaran. Terima kasih!`;
             
             return `https://wa.me/6281973314302?text=${encodeURIComponent(pesanWA)}`;
         }
@@ -774,14 +730,14 @@
         function handleFormSubmit() {
             const formData = new FormData(elements.orderForm);
             const nama = formData.get('nama').trim();
-            const alamat = formData.get('alamat').trim();
             const nomorHp = formData.get('nomor_hp').trim();
+            const provinsi = formData.get('provinsi');
             const operator = formData.get('operator');
             const selectedPackageKey = document.querySelector('input[name="paket"]:checked').value;
             const selectedPaymentMethodKey = document.querySelector('input[name="payment"]:checked');
 
             // --- Validation Checks ---
-            if (!nama || !alamat || !nomorHp) {
+            if (!nama || !nomorHp || !provinsi) {
                 showInfoModal(`
                     <div class='flex flex-col items-center text-center'>
                         <div class='w-16 h-16 mb-4 rounded-full bg-red-500/10 flex items-center justify-center'><i class='fas fa-times-circle text-3xl text-red-400'></i></div>
@@ -803,7 +759,7 @@
                 `);
                 return;
             }
-             // NEW VALIDATION LOGIC
+            
             const validPrefixes = operatorPrefixes[operator];
             const numberPrefix = nomorHp.substring(0, 4);
             if (!validPrefixes || !validPrefixes.includes(numberPrefix)) {
@@ -832,98 +788,10 @@
             // --- End Validation ---
 
             const pkg = packages[selectedPackageKey];
-            const totalPrice = pkg.price + uniqueCode;
-            const paymentAccount = paymentAccounts[selectedPaymentMethodKey.value];
-
-            elements.mainContentContainer.style.display = 'none';
-            elements.footer.style.display = 'none';
-
-            const paymentMethodText = paymentAccount.bank.includes('Virtual Account') 
-                ? `ke nomor ${paymentAccount.bank}` 
-                : paymentAccount.bank ? `ke rekening ${paymentAccount.bank}` : `ke nomor DANA`;
-
-            const bankInfo = paymentAccount.bank ? `• ${paymentAccount.bank}` : '';
-
-            const waLink = generateWaLink(formData, pkg, totalPrice);
-            const paymentViewHTML = `
-                <div class="p-4 sm:p-8 md:p-10 flex flex-col items-center text-center max-w-2xl mx-auto">
-                    <div class="w-24 h-24 mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <span class="text-5xl">🎉</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">Terima Kasih Atas Pesanan Anda!</h2>
-                    <p class="text-gray-400 mb-6">Selesaikan pembayaran untuk mengaktifkan paket Anda. Silakan transfer sejumlah:</p>
-                    
-                    <div class="bg-gray-900 border-2 border-dashed border-accent text-accent font-bold text-3xl sm:text-4xl rounded-xl py-4 px-6 sm:px-8 mb-6">
-                        ${formatCurrency(totalPrice)}
-                    </div>
-                    
-                    <p class="text-gray-400 mb-6">${paymentMethodText} berikut ini:</p>
-                    
-                    <div class="w-full bg-gray-800 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-700 text-left mb-6">
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                            <div class="text-left">
-                                <img src="${paymentAccount.logo}" alt="Logo ${paymentAccount.bank}" class="h-6 mb-2 bg-white p-1 rounded">
-                                <p class="text-xl sm:text-2xl font-bold text-white tracking-wider break-all">${paymentAccount.number}</p>
-                                <p class="text-gray-400 mt-1">${paymentAccount.name} ${bankInfo}</p>
-                            </div>
-                            <button onclick="copyToClipboard('${paymentAccount.number}', 'Nomor Rekening')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full sm:w-auto flex-shrink-0">
-                                Salin
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="w-full flex justify-between items-center bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700 mb-8">
-                        <span class="text-gray-400">Total transfer</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-lg sm:text-xl text-white">${formatCurrency(totalPrice)}</span>
-                            <button onclick="copyToClipboard('${totalPrice}', 'Total Transfer')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex-shrink-0">
-                                Salin
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="w-full space-y-4">
-                        <button type="button" id="check-status-btn" class="cta-button secondary-button">Cek Status Pesanan</button>
-                        <a href="${waLink}" target="_blank" class="cta-button green-button">Konfirmasi Pembayaran via WhatsApp</a>
-                    </div>
-                </div>
-            `;
-            elements.paymentInstructionContainer.innerHTML = paymentViewHTML;
-
-            // Add event listener for the new status check button
-            document.getElementById('check-status-btn').addEventListener('click', () => {
-                const statusMessageHTML = `
-                    <div class="flex flex-col items-center text-center">
-                         <div class="w-16 h-16 mb-4 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                            <i class="fas fa-clock text-3xl text-yellow-400"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Menunggu Pembayaran</h3>
-                        <p class="text-gray-400 mb-6 text-sm">Selesaikan pembayaran untuk mengaktifkan paket Anda.</p>
-                        
-                        <div class="w-full text-left text-sm border-t border-b border-gray-700 py-4 space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Nomor Tujuan</span>
-                                <span class="font-semibold text-white">${nomorHp}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Total Pembayaran</span>
-                                <span class="font-semibold text-white">${formatCurrency(totalPrice)}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Masa Aktif</span>
-                                <span class="font-semibold text-white">${pkg.name.replace('Paket ', '')}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">ID Transaksi</span>
-                                <span class="font-semibold text-white">-</span>
-                            </div>
-                        </div>
-                        
-                        <button class="modal-ok-button" onclick="closeInfoModal()">Tutup</button>
-                    </div>
-                `;
-                showInfoModal(statusMessageHTML, { glow: true });
-            });
+            const waLink = generateWaLink(formData, pkg);
+            
+            // Redirect to WhatsApp
+            window.location.href = waLink;
         }
         
         // --- NOTIFICATION FUNCTIONS ---
@@ -978,20 +846,11 @@
 
     // --- GLOBAL HELPER FUNCTIONS ---
     const infoModal = document.getElementById('infoModal');
-    function showInfoModal(contentHTML, options = {}) {
+    function showInfoModal(contentHTML) {
         if (!infoModal) return;
-        const modalContent = infoModal.querySelector('.modal-content');
         const modalBody = infoModal.querySelector('#modalBody');
         
-        // Reset glow effect
-        modalContent.classList.remove('glow');
-
-        // Add glow effect if specified
-        if (options.glow) {
-            modalContent.classList.add('glow');
-        }
-        
-        // Inject new HTML content
+        // Clear previous content and inject new HTML
         modalBody.innerHTML = contentHTML;
         
         // Simple alerts (fallback)
